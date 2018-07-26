@@ -35,11 +35,10 @@ public class Execution {
 		managerService.addEmployee(hr1.id, ceo.id, employeeMap, ceo.reportingEmployees);
 
 		newId++;
-
+		System.out.println(Constants.Input.WELCOME_TO_GIRNARSOFT);
 		do {
 			readWriteToFile(1); // reading from file copying data into hashMap
 			readWriteToFile(0);
-			System.out.println(Constants.Input.WELCOME_TO_GIRNARSOFT);
 			System.out.println(Constants.Input.MENU);
 			String input = SCANNER.nextLine();
 			try {
@@ -83,19 +82,18 @@ public class Execution {
 		} while (userInput != 7);
 		SCANNER.close();
 	}
+
 	/**
 	 * 
 	 *
 	 * @param flag
 	 * 
-	 * flag=0 -> to write to file
-	 * writing to file
-	 * storing details of every employee in the form of string
-	 * seperating each attribute by delimeter "@	
+	 *            flag=0 -> to write to file writing to file storing details of
+	 *            every employee in the form of string seperating each attribute by
+	 *            delimeter "@
 	 * 
-	 * flag=1 ->to read from file
-	 * Copying from file to HashMap<Employee>
-	 * On each and every execution Hashmap will be updated from File
+	 *            flag=1 ->to read from file Copying from file to HashMap<Employee>
+	 *            On each and every execution Hashmap will be updated from File
 	 */
 
 	public static void readWriteToFile(int flag) {
@@ -112,15 +110,13 @@ public class Execution {
 				}
 
 				fw.close();
-			}
-			else {
+			} else {
 				FileReader fileReader = new FileReader("myObjects.txt");
 				String line = null;
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
 				BufferedReader bufferedReader2 = new BufferedReader(fileReader);
 				String[] arrOfStr;
 
-				 
 				while ((line = bufferedReader.readLine()) != null) {
 
 					// Converting String to array of Strings
@@ -167,16 +163,18 @@ public class Execution {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * function to check if string having alphabets and whitespaces
+	 * 
 	 * @param name
 	 * @return
 	 */
-	
-	
+
 	public static boolean isAlpha(String name) {
 		return name.matches("[a-zA-Z][a-zA-Z ]*");
 	}
+
 	/**
 	 * 
 	 * @param input
@@ -187,6 +185,7 @@ public class Execution {
 		return (input.matches("^\\d+(\\.\\d+)?"));
 
 	}
+
 	/**
 	 * Function to print all employees basic info
 	 */
@@ -199,6 +198,7 @@ public class Execution {
 		}
 
 	}
+
 	/**
 	 * 
 	 * @param string
@@ -212,6 +212,7 @@ public class Execution {
 		}
 		return string;
 	}
+
 	/**
 	 * validating users id and password and then performing the required action
 	 */
@@ -221,12 +222,12 @@ public class Execution {
 		STRING_SELF_ID = validId(SCANNER.nextLine());
 		SELF_ID = Integer.parseInt(STRING_SELF_ID);
 		Employee employee = employeeMap.get(SELF_ID);
-		
+
 		System.out.println("Enter your password");
-		String selfPassword=SCANNER.nextLine();
-		if(!selfPassword.equals(employee.getPassword()))
-		{
+		String selfPassword = SCANNER.nextLine();
+		if (!selfPassword.equals(employee.getPassword())) {
 			System.out.println("Wrong Password");
+			SELF_ID = 0;
 			return;
 		}
 
@@ -234,7 +235,6 @@ public class Execution {
 		STRING_EMPLOYEE_ID = validId(SCANNER.nextLine());
 		EMPLOYEE_ID = Integer.parseInt(STRING_EMPLOYEE_ID);
 
-		
 		selfRole = employee.role;
 
 		switch (selfRole) {
@@ -255,35 +255,40 @@ public class Execution {
 		}
 
 	}
+
 	/**
 	 * Calling the function of appropriate class according to the role of the user
 	 */
 
 	public static void takeInputAdd() {
 		takeInputs();
-		switch (selfRole) {
-		case 0:
-			employeeService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap, employeeMap.get(SELF_ID).reportingEmployees);
-			break;
-		case 1:
-			managerService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap, employeeMap.get(SELF_ID).reportingEmployees);
-			break;
-		case 2:
-			hrService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap, employeeMap.get(SELF_ID).reportingEmployees);
-			break;
-		case 3:
-			ceoService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap, employeeMap.get(SELF_ID).reportingEmployees);
-			break;
-		default:
-			System.out.println("Invalid Input");
+		if (selfRole != 0) {
+			switch (selfRole) {
+			case 0:
+				employeeService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap,
+						employeeMap.get(SELF_ID).reportingEmployees);
+				break;
+			case 1:
+				managerService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap,
+						employeeMap.get(SELF_ID).reportingEmployees);
+				break;
+			case 2:
+				hrService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap, employeeMap.get(SELF_ID).reportingEmployees);
+				break;
+			case 3:
+				ceoService.addEmployee(EMPLOYEE_ID, SELF_ID, employeeMap, employeeMap.get(SELF_ID).reportingEmployees);
+				break;
+			default:
+				System.out.println("Invalid Input");
+			}
 		}
 
 	}
+
 	/**
-	 * function call to remove an employee based on your designation 
+	 * function call to remove an employee based on your designation
 	 */
 
-	
 	public static void takeInputRemove() {
 		takeInputs();
 
@@ -305,11 +310,11 @@ public class Execution {
 		}
 
 	}
+
 	/**
 	 * Function to input details of new employee and adding it
 	 */
 
-	
 	public static void takeAllDetails() {
 		String name;
 		int role;
@@ -344,10 +349,9 @@ public class Execution {
 
 	}
 
-	
 	/**
-	 * Input details through the method takeInput()
-	 * Function call according to the designation of the employee
+	 * Input details through the method takeInput() Function call according to the
+	 * designation of the employee
 	 */
 
 	public static void takePromoteDetails() {
@@ -380,21 +384,18 @@ public class Execution {
 		stringId = validId(SCANNER.nextLine());
 		int selfId = Integer.parseInt(stringId);
 		System.out.println("Enter your password");
-		String password=SCANNER.nextLine();
+		String password = SCANNER.nextLine();
 		Employee employee = employeeMap.get(selfId);
-		if(password.equals(employee.getPassword()))
-		{
+		if (password.equals(employee.getPassword())) {
 			if (employee.getReportingEmployees() != null) {
 				ArrayList<Integer> employees = employee.getReportingEmployees();
-				System.out.println("List of reporting employees of "+ employee.getName()+":");
+				System.out.println("List of reporting employees of " + employee.getName() + ":");
 				for (int i = 0; i < employees.size(); i++) {
 					System.out.println(employees.get(i));
 				}
 			} else
 				System.out.println(Constants.ErrorMessages.NO_ONE_REPORTING);
-		}
-		else
-		{
+		} else {
 			System.out.println(Constants.ErrorMessages.WRONG_PASSWORD);
 		}
 	}
